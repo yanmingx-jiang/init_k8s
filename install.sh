@@ -137,7 +137,9 @@ set_time_centos() {
 install_kube_ubuntu() {
     apt -y install curl wget vim git apt-transport-https gnupg gnupg2 software-properties-common ca-certificates lsb-release
     curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    #echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+    echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/etc/apt/sources.list.d/kubernetes.list
     systemctl stop ufw
     systemctl disable ufw
     apt purge -y needrestart --allow-change-held-packages
