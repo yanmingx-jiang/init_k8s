@@ -122,8 +122,22 @@ EOF
 [Service]	
 Environment="NO_PROXY=${local_ip}127.0.0.1,flex-npg-workload.bj.intel.com,localhost,10.67.116.242,172.17.28.0/23,10.67.0.0/16,10.166.0.0/16,10.96.0.0/12,10.244.0.0/16,flex-npg-workload.sh.intel.com,intel.com,intel.com,$dockermirror"
 EOF
-
-    else
+    # set docker proxy
+    mkdir ~/.docker 
+    cat << EOF > ~/.docker/config.json
+    {
+     "proxies":
+     {
+       "default":
+       {
+         "httpProxy": "$DMZ_PROXY_HTTP",
+         "httpsProxy": "$DMZ_PROXY_HTTPS",
+         "noProxy": "${local_ip}localhost,127.0.0.0/8,10.67.0.0/16,10.166.0.0/16,10.96.0.0/12,10.244.0.0/16"
+       }
+     }
+    }
+    EOF
+else
         tee /etc/systemd/system/docker.service.d/https-proxy.conf <<EOF
 [Service]
 Environment="HTTPS_PROXY=${PRC_PROXY}"
@@ -138,6 +152,22 @@ EOF
 [Service]	
 Environment="NO_PROXY=${local_ip}127.0.0.1,flex-npg-workload.bj.intel.com,localhost,10.67.116.242,10.67.0.0/16,10.166.0.0/16,10.96.0.0/12,10.244.0.0/16,flex-npg-workload.sh.intel.com,172.17.28.0/23,$dockermirror"
 EOF
+    # set docker proxy
+    mkdir ~/.docker 
+    cat << EOF > ~/.docker/config.json
+    {
+     "proxies":
+     {
+       "default":
+       {
+         "httpProxy": "$PRC_PROXY",
+         "httpsProxy": "$PRC_PROXY",
+         "noProxy": "${local_ip}localhost,127.0.0.0/8,10.67.0.0/16,10.166.0.0/16,10.96.0.0/12,10.244.0.0/16"
+       }
+     }
+    }
+    EOF
+
     fi
 }
 
