@@ -136,7 +136,7 @@ EOF
        }
      }
     }
-    EOF
+EOF
 else
         tee /etc/systemd/system/docker.service.d/https-proxy.conf <<EOF
 [Service]
@@ -166,7 +166,7 @@ EOF
        }
      }
     }
-    EOF
+EOF
 
     fi
 }
