@@ -3,9 +3,11 @@ The installation was verified on ubuntu 22.0.4 and centos 8
 #  usage:
 Please use an account with root privileges to execute the command.
 ```
-git clone --recurse-submodules https://github.com/intel-sandbox/wielabmanager.git
-cd wielabmanager/init_k8
-PRC_PROXY="http://child-prc.intel.com:913" && bash install.sh --ver=1.23.3 --cri=docker --net=calico --role=master 
+git clone --recurse-submodules https://github.com/yanmingx-jiang/init_k8s
+cd init_k8
+./install.sh --ver=1.23.3 --cri=docker --docker_ver=20.10.23 --net=calico --role=master    
+kubectl taint nodes `hostname`  node-role.kubernetes.io/master=:NoSchedule-
+kubectl apply -f calico-v3.24.yaml
 ```
 Note:that the **PRC** proxy mode is used by default
 
