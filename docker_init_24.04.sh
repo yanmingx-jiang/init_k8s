@@ -6,6 +6,7 @@ dockermirror="10.67.115.219:5000"
 
 display_usage() {
     echo -e "Example: ./docker_init_24.04.sh --docker_ver=5:27.5.1-1~ubuntu.24.04~noble --proxy=dmz/prc \n"
+    # apt-cache madison docker-ce-cli  
 }
 
 if [[ "$1" == *h ]] || [[ "$1" == *help ]] ; then
@@ -121,6 +122,8 @@ EOF
 
 
     fi
+systemctl daemon-reload
+systemctl restart docker
 
 }
 
